@@ -1,0 +1,31 @@
+# Sample 2: Two talkers and a listener in the same pod
+#
+# The listener container should receive messages sent from both
+# listener containers. Does this work?
+#
+# Apply with the command
+#   microk8s.kubectl apply -f sample2.ttl.yaml
+# Remove with the command
+#   microk8s.kubectl delete pod tl
+#
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tl
+spec:
+  hostNetwork: true
+  containers:
+  - name: t1 
+    image: ros:foxy
+    command: ["/bin/bash", "-c"]
+    args: ["source /opt/ros/foxy/setup.bash && apt update && apt install -y ros-foxy-demo-nodes-cpp && ros2 run demo_nodes_cpp talker"]
+  - name: t2 
+    image: ros:foxy
+    command: ["/bin/bash", "-c"]
+    args: ["source /opt/ros/foxy/setup.bash && apt update && apt install -y ros-foxy-demo-nodes-cpp && ros2 run demo_nodes_cpp talker"]
+  - name: l1 
+    image: ros:foxy
+    command: ["/bin/bash", "-c"]
+    args: ["source /opt/ros/foxy/setup.bash && apt update && apt install -y ros-foxy-demo-nodes-cpp && ros2 run demo_nodes_cpp listener"]
+  restartPolicy: Never
+

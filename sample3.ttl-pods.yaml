@@ -1,0 +1,49 @@
+# Sample 3: Two talkers and a listener, each container in its own pod
+#
+# The listener container should receive messages sent from both of the
+# listener containers. Does this work? What if hostNetwork is enabled?
+#
+# Apply with the command
+#   microk8s.kubectl apply -f sample3.ttl-pods.yaml
+# Remove with the command
+#   microk8s.kubectl delete pods t1 t2 l
+#
+apiVersion: v1
+kind: Pod
+metadata:
+  name: t1
+spec:
+  #  hostNetwork: true
+  containers:
+  - name: t1 
+    image: ros:foxy
+    command: ["/bin/bash", "-c"]
+    args: ["source /opt/ros/foxy/setup.bash && apt update && apt install -y ros-foxy-demo-nodes-cpp && ros2 run demo_nodes_cpp talker"]
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: t2
+spec:
+  #  hostNetwork: true
+  containers:
+  - name: t2 
+    image: ros:foxy
+    command: ["/bin/bash", "-c"]
+    args: ["source /opt/ros/foxy/setup.bash && apt update && apt install -y ros-foxy-demo-nodes-cpp && ros2 run demo_nodes_cpp talker"]
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: l
+spec:
+  #  hostNetwork: true
+  containers:
+  - name: l1 
+    image: ros:foxy
+    command: ["/bin/bash", "-c"]
+    args: ["source /opt/ros/foxy/setup.bash && apt update && apt install -y ros-foxy-demo-nodes-cpp && ros2 run demo_nodes_cpp listener"]
