@@ -4,7 +4,6 @@
 #  https://index.ros.org/doc/ros2/Tutorials/Writing-A-Simple-Py-Publisher-And-Subscriber/
 #
 import os
-from random import random
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
@@ -47,5 +46,5 @@ if __name__ == '__main__':
     if len (sys.argv) == 2:
         msg += sys.argv[1] + ":"
     msg += os.environ['HOSTNAME']
-    msg += ":" + str(int(random()*1000))
+    msg += ":" + str(os.getpid())
     main(msg)

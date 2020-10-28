@@ -6,7 +6,6 @@
 import os
 import rclpy
 from rclpy.node import Node
-from random import random
 from std_msgs.msg import String
 import sys
 
@@ -50,6 +49,6 @@ if __name__ == '__main__':
     if len (sys.argv) == 2:
         msg += sys.argv[1] + ":"
     msg += os.environ['HOSTNAME']
-    msg += ":" + str(int(random()*1000))
+    msg += ":" + str(os.getpid())
     main(msg)
 
