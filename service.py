@@ -6,7 +6,8 @@
 import os
 import rclpy
 from rclpy.node import Node
-from std_msgs.msg import String, Trigger
+from std_msgs.msg import String
+from std_srvs.srv import Trigger
 import sys
 
 #
