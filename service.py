@@ -4,6 +4,7 @@
 #  https://index.ros.org/doc/ros2/Tutorials/Writing-A-Simple-Py-Service-And-Client/
 #
 import os
+from random import random
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
