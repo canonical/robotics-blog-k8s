@@ -1,0 +1,78 @@
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: my-network
+spec:
+  config: '{
+    "cniVersion": "0.3.0",
+    "name": "my-network",
+    "type": "macvlan",
+    "master": "eth0",
+    "mode": "bridge",
+    "isDefaultgateway": true,
+    "ipam": {
+      "type": "host-local",
+      "ranges": [
+         [ {
+           "subnet": "192.168.0.0/16",
+           "rangeStart": "192.168.1.160",
+           "rangeEnd": "192.168.1.180",
+           "gateway": "192.168.1.1"
+         } ]
+      ]
+    }
+  }'
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ros-talker-deployment
+  labels:
+    app: ros-talker
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ros-talker
+  template:
+    metadata:
+      labels:
+        app: ros-talker
+      annotations:
+        k8s.v1.cni.cncf.io/networks: my-network
+    spec:
+      containers:
+      - name: talker 
+        image: ros:foxy
+        command: ["/bin/bash", "-c"]
+        args: ["source /opt/ros/foxy/setup.bash && apt update && apt install -y curl && curl https://raw.githubusercontent.com/canonical/robotics-blog-k8s/main/publisher.py > publisher.py && /bin/python3 publisher.py talker"]
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ros-listener-deployment
+  labels:
+    app: ros-listener
+  annotations:
+    k8s.v1.cni.cncf.io/networks: my-network
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ros-listener
+  template:
+    metadata:
+      labels:
+        app: ros-listener
+      annotations:
+        k8s.v1.cni.cncf.io/networks: my-network
+    spec:
+      containers:
+      - name: listener
+        image: ros:foxy
+        command: ["/bin/bash", "-c"]
+        args: ["source /opt/ros/foxy/setup.bash && apt update && apt install -y curl && curl https://raw.githubusercontent.com/canonical/robotics-blog-k8s/main/subscriber.py > subscriber.py && /bin/python3 subscriber.py listener"]
