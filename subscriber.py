@@ -15,7 +15,7 @@ class MinimalSubscriber(Node):
         super().__init__('minimal_subscriber')
         self.subscription = self.create_subscription(
             String,
-            'microk8s',
+            'microk8s-chatter',
             self.listener_callback,
             10)
         self.msg = msg
