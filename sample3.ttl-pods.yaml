@@ -18,10 +18,8 @@ spec:
   - name: t1 
     image: ros:foxy
     command: ["/bin/bash", "-c"]
-    args: ["source /opt/ros/foxy/setup.bash && apt update && apt install -y ros-foxy-demo-nodes-cpp && ros2 run demo_nodes_cpp talker"]
-
+    args: ["source /opt/ros/foxy/setup.bash && apt update && apt install -y curl && curl https://raw.githubusercontent.com/canonical/robotics-blog-k8s/main/publisher.py > publisher.py && /bin/python3 publisher.py t1"]
 ---
-
 apiVersion: v1
 kind: Pod
 metadata:
@@ -32,18 +30,16 @@ spec:
   - name: t2 
     image: ros:foxy
     command: ["/bin/bash", "-c"]
-    args: ["source /opt/ros/foxy/setup.bash && apt update && apt install -y ros-foxy-demo-nodes-cpp && ros2 run demo_nodes_cpp talker"]
-
+    args: ["source /opt/ros/foxy/setup.bash && apt update && apt install -y curl && curl https://raw.githubusercontent.com/canonical/robotics-blog-k8s/main/publisher.py > publisher.py && /bin/python3 publisher.py t2"]
 ---
-
 apiVersion: v1
 kind: Pod
 metadata:
-  name: l
+  name: l1
 spec:
   #  hostNetwork: true
   containers:
   - name: l1 
     image: ros:foxy
     command: ["/bin/bash", "-c"]
-    args: ["source /opt/ros/foxy/setup.bash && apt update && apt install -y ros-foxy-demo-nodes-cpp && ros2 run demo_nodes_cpp listener"]
+    args: ["source /opt/ros/foxy/setup.bash && apt update && apt install -y curl && curl https://raw.githubusercontent.com/canonical/robotics-blog-k8s/main/subscriber.py > subscriber.py && /bin/python3 subscriber.py l1"]

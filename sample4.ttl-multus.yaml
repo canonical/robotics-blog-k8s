@@ -34,9 +34,7 @@ spec:
       ]
     }
   }'
-
 ---
-
 apiVersion: v1
 kind: Pod
 metadata:
@@ -49,9 +47,7 @@ spec:
     image: ros:foxy
     command: ["/bin/bash", "-c"]
     args: ["source /opt/ros/foxy/setup.bash && apt update && apt install -y curl && curl https://raw.githubusercontent.com/canonical/robotics-blog-k8s/main/publisher.py > publisher.py && /bin/python3 publisher.py t1"]
-
 ---
-
 apiVersion: v1
 kind: Pod
 metadata:
@@ -64,13 +60,11 @@ spec:
     image: ros:foxy
     command: ["/bin/bash", "-c"]
     args: ["source /opt/ros/foxy/setup.bash && apt update && apt install -y curl && curl https://raw.githubusercontent.com/canonical/robotics-blog-k8s/main/publisher.py > publisher.py && /bin/python3 publisher.py t2"]
-
 ---
-
 apiVersion: v1
 kind: Pod
 metadata:
-  name: l
+  name: l1
   annotations:
     k8s.v1.cni.cncf.io/networks: my-network
 spec:
