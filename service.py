@@ -14,7 +14,7 @@ import sys
 #
 # Start this service by calling it with a trigger message. If the call
 # succeeds (returns True), the service does work (i.e., send messages on
-# the microk8s-chatter topic) for a short time. The call will fail (return False)
+# the microk8s_chatter topic) for a short time. The call will fail (return False)
 # if the service is already busy working.
 #
 class MinimalService(Node):
@@ -47,7 +47,7 @@ class MinimalService(Node):
     self.total_work = int (random() * 20) + 5
     self.work_completed = 0
     self.timer = self.create_timer(timer_period, self.work_callback)
-    self.publisher_ = self.create_publisher(String, 'microk8s-chatter', 10)
+    self.publisher_ = self.create_publisher(String, 'microk8s_chatter', 10)
     return self.working
 
   # Close out work
@@ -59,7 +59,7 @@ class MinimalService(Node):
     self.destroy_publisher (self.publisher_)
     return True
 
-  # "Work" is publishing a message on the microk8s-chatter topic
+  # "Work" is publishing a message on the microk8s_chatter topic
   def work_callback(self):
     self.work_completed += 1
     msg = String()
