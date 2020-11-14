@@ -3,10 +3,9 @@
 #  This code derived from the ROS 2 tutorials available at
 #  https://index.ros.org/doc/ros2/Tutorials/Writing-A-Simple-Py-Service-And-Client/
 #
-import os
 import rclpy
 from rclpy.node import Node
-
+import socket
 from std_msgs.msg import String
 from std_srvs.srv import Trigger
 
@@ -15,30 +14,27 @@ from std_srvs.srv import Trigger
 #
 class MinimalService(Node):
 
-  def __init__(self, hostname="worker"):
+  def __init__(self, svcname="worker"):
     super().__init__('worker_service')
-    # The service lives at worker/[hostname] 
-    self.srv = self.create_service(Trigger, "worker/" + hostname, self.work_callback)
+    self.srv = self.create_service(Trigger, "worker/" + svcname, self.work_callback)
 
   def work_callback(self, request, response):
-    response.message = 'Service started working'
+    response.message = 'Work request called'
     response.success = True
     self.get_logger().info(response.message)
     return response
 
-def main(hostname):
+def main(svcname):
   rclpy.init(args=None)
-  minimal_service = MinimalService(hostname)
+  minimal_service = MinimalService(svcname)
 
   rclpy.spin(minimal_service)
 
   minimal_service.destroy_node()
   rclpy.shutdown()
 
-
 if __name__ == '__main__':
-    if "HOSTNAME" in os.environ.keys():
-      hostname = os.environ['HOSTNAME']
-    else:
-      hostname = "localhost"
-    main(hostname)
+    svcname = "svc_"
+    # ensure this service gets a unique name
+    svcname += socket.gethostbyname(socket.gethostname()).replace(".","_")
+    main(svcname)
