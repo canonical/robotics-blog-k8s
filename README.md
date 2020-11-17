@@ -4,6 +4,6 @@ This repository holds companion files for the blog series on running [ROS 2](htt
 
  - [Part 1: Exploring ROS 2 with Kubernetes](https://ubuntu.com/blog/exploring-ros-2-with-kubernetes)
  - [Part 2: ROS 2 on Kubernetes: a simple talker and listener setup](https://ubuntu.com/blog/ros-2-on-kubernetes-a-simple-talker-and-listener-setup)
- - Part 3: Exploring different ROS 2 Kubernetes configurations
- - Part 4: Setting up a multi-node ROS 2 Kubernetes cluster
- - Part 5: Adding a ROS 2 service to your Kubernetes cluster
+ - [Part 3: Distribute ROS 2 across machines with MicroK8s](https://ubuntu.com/blog/distribute-ros-2-across-machines-with-kubernetes)
+ - Part 4: Exploring different ROS 2 Kubernetes configurations
+ 
