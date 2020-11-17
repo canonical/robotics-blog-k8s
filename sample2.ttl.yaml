@@ -26,4 +26,3 @@ spec:
     image: ros:foxy
     command: ["/bin/bash", "-c"]
     args: ["source /opt/ros/foxy/setup.bash && apt update && apt install -y curl && curl https://raw.githubusercontent.com/canonical/robotics-blog-k8s/main/subscriber.py > subscriber.py && /bin/python3 subscriber.py l1"]
-

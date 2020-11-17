@@ -13,7 +13,6 @@ kind: Pod
 metadata:
   name: t1
 spec:
-  #  hostNetwork: true
   containers:
   - name: t1 
     image: ros:foxy
@@ -25,7 +24,6 @@ kind: Pod
 metadata:
   name: t2
 spec:
-  #  hostNetwork: true
   containers:
   - name: t2 
     image: ros:foxy
@@ -37,7 +35,6 @@ kind: Pod
 metadata:
   name: l1
 spec:
-  #  hostNetwork: true
   containers:
   - name: l1 
     image: ros:foxy
